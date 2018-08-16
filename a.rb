@@ -47,6 +47,8 @@ class TramGame
               SDL2::INIT_EVENTS |
               SDL2::INIT_TIMER
 
+    SDL2::Mouse::Cursor.hide
+
     window = SDL2::Window.create("testsprite",
                                  SDL2::Window::POS_CENTERED,
                                  SDL2::Window::POS_CENTERED,
@@ -81,6 +83,12 @@ class TramGame
           on_mouse_down(event)
         end
       end
+
+      @renderer.draw_color = [0,0,0]
+      @renderer.clear
+
+      mouse = SDL2::Mouse.state
+      draw_cross(mouse)
 
       @renderer.present
     end
