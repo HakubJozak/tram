@@ -6,7 +6,7 @@ require "pry"
 class Vector2
 
   attr_reader :x, :y
-  
+
   def initialize(a,b)
     @x = a
     @y = b
@@ -18,7 +18,7 @@ class Vector2
 
   def -(b)
     Vector2.new(x - b.x, y - b.y)
-  end  
+  end
 
   def *(alpha)
     Vector2.new(alpha * x, alpha * y)
@@ -39,6 +39,9 @@ end
 class TramGame
 
   def initialize
+    @a = Vector2.new(30,20)
+    @b = Vector2.new(643,600)
+
     SDL2.init SDL2::INIT_VIDEO  |
               SDL2::INIT_AUDIO  |
               SDL2::INIT_EVENTS |
@@ -56,22 +59,29 @@ class TramGame
     a + (b-a) * t
   end
 
-  def run
-    a = Vector2.new(30,20)
-    b = Vector2.new(643,600)
+  def qerp(a,b,c, &block)
     t = 0.0
 
+    while t < 1.0
+      q1 = a * ((1-t)**2)
+      q2 = b * (2*(1-t) * t)
+      q3 = c * (t**2)
+      yield q1 + q2 + q3
+      t += 0.001
+    end
+  end
+  
+  def run
     loop do
       while event = SDL2::Event.poll
         case event
         when SDL2::Event::KeyDown
           on_key_down(event.scancode)
+        when SDL2::Event::MouseButtonDown
+          on_mouse_down(event)
         end
       end
 
-      draw_dot(lerp(a,b,t))
-      t += 0.001 unless t > 1.0
-      
       @renderer.present
     end
   end
@@ -82,25 +92,33 @@ class TramGame
     end
   end
 
+  def on_mouse_down(event)
+    if event.button == 1
+      x = Vector2.new(event.x, event.y)
+      draw_cross(x)
+
+      qerp(@a,x,@b) do |x|
+	draw_dot(x)
+      end
+    end
+  end
+
   private
 
-  def draw_dot(a)
-    @renderer.draw_color = [255, 255, 0]
+  def draw_dot(a, color = [255, 255, 0])
+    @renderer.draw_color = color
     @renderer.draw_point(a.x, a.y)
+  end
+
+  def draw_cross(a, color = [0,255,0] )
+    size = 5
+    @renderer.draw_color = color
+    @renderer.draw_line(a.x - size , a.y - size, a.x + size, a.y + size)
+    @renderer.draw_line(a.x - size , a.y + size, a.x + size, a.y - size)    
   end
 
 end
 
 
 
-TramGame.new.run                         
-
-
-
-
-
-
-
-
-
-
+TramGame.new.run
