@@ -1,36 +1,10 @@
 require "sdl2"
 require "pry"
 
+require_relative "path"
+require_relative "vector2"
 
 
-class Vector2
-
-  attr_reader :x, :y
-
-  def initialize(a,b)
-    @x = a
-    @y = b
-  end
-
-  def +(b)
-    Vector2.new(x + b.x, y + b.y)
-  end
-
-  def -(b)
-    Vector2.new(x - b.x, y - b.y)
-  end
-
-  def *(alpha)
-    Vector2.new(alpha * x, alpha * y)
-  end
-
-  # def +=(b)
-  #   self[0] += b[0]
-  #   self[1] += b[1]
-  #   self
-  # end
-
-end
 
 
 
@@ -39,8 +13,7 @@ end
 class TramGame
 
   def initialize
-    @a = Vector2.new(30,20)
-    @b = Vector2.new(643,600)
+    @path = Path.new
 
     SDL2.init SDL2::INIT_VIDEO  |
               SDL2::INIT_AUDIO  |
@@ -57,22 +30,6 @@ class TramGame
     @renderer = window.create_renderer(-1, 0)
   end
 
-  def lerp(a,b,t)
-    a + (b-a) * t
-  end
-
-  def qerp(a,b,c, &block)
-    t = 0.0
-
-    while t < 1.0
-      q1 = a * ((1-t)**2)
-      q2 = b * (2*(1-t) * t)
-      q3 = c * (t**2)
-      yield q1 + q2 + q3
-      t += 0.001
-    end
-  end
-  
   def run
     loop do
       while event = SDL2::Event.poll
@@ -89,6 +46,7 @@ class TramGame
 
       mouse = SDL2::Mouse.state
       draw_cross(mouse)
+      @path.draw(self)
 
       @renderer.present
     end
@@ -102,27 +60,25 @@ class TramGame
 
   def on_mouse_down(event)
     if event.button == 1
-      x = Vector2.new(event.x, event.y)
-      draw_cross(x)
-
-      qerp(@a,x,@b) do |x|
-	draw_dot(x)
-      end
+      @path << Vector2.new(event.x, event.y)
     end
   end
-
-  private
 
   def draw_dot(a, color = [255, 255, 0])
     @renderer.draw_color = color
     @renderer.draw_point(a.x, a.y)
   end
 
-  def draw_cross(a, color = [0,255,0] )
-    size = 5
+  def draw_cross(a, color = [0,255,0], size = 5 )
     @renderer.draw_color = color
     @renderer.draw_line(a.x - size , a.y - size, a.x + size, a.y + size)
     @renderer.draw_line(a.x - size , a.y + size, a.x + size, a.y - size)    
+  end
+
+  def draw_square(a, color = [255,0,0], size = 5)
+    @renderer.draw_color = color
+    rect = SDL2::Rect.new(a.x - size, a.y - size, size, size)
+    @renderer.fill_rect(rect)
   end
 
 end
