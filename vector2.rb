@@ -1,6 +1,6 @@
 class Vector2
 
-  attr_reader :x, :y
+  attr_accessor :x, :y
 
   def initialize(a,b)
     @x = a

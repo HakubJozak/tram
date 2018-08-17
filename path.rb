@@ -5,6 +5,7 @@ class Path
 
   RED = [ 255,0,0]
   WHITE = [ 255,255,255]
+  YELLOW = [ 255,255, 0]  
 
   def initialize
     @points = []
@@ -12,29 +13,52 @@ class Path
   end
 
   def <<(point)
-    @points << point
-
-    if @points.size > 1
-      a = @points[-2]
-      b = @points[-1]
-
-      half = a + (b - a) * 0.5
-
-      puts "Half: #{half}, Point: #{point}"
-      
-      @controls << half
+    if @points.size <= @controls.size
+      @points << point
+    else
+      @controls << point
     end
 
     point
   end
 
+
+  # def <<(point)
+  #   @points << point
+
+  #   if @points.size > 1
+  #     a = @points[-2]
+  #     b = @points[-1]
+
+  #     half = a + (b - a) * 0.5
+
+  #     puts "Half: #{half}, Point: #{point}"
+  #     half.x += 30
+
+  #     @controls << half
+  #   end
+
+  #   point
+  # end
+
   def draw(pen)
+
+
+    @controls.each.with_index do |x,i|
+      a = @points[i]
+      b = @points[i+1]
+
+      if a && b
+        qerp(a,x,b) do |c|
+          pen.draw_dot(c, YELLOW)
+        end
+      end
+      
+      pen.draw_square(x, WHITE)
+    end    
+    
     @points.each do |p|
       pen.draw_square(p, RED)
-    end
-
-    @controls.each do |p|
-      pen.draw_square(p, WHITE)
     end    
   end
 
