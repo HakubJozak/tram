@@ -60,10 +60,8 @@ class TramGame
         end
       end
 
-      if @selected
-        @selected.x = @mouse.x
-        @selected.y = @mouse.y
-      end
+      @selected.update(@mouse) if @selected
+
 
       @renderer.draw_color = [0,0,0]
       @renderer.clear
@@ -82,7 +80,10 @@ class TramGame
 
   def on_key_down(scancode)
     case scancode
-    when SDL2::Key::Scan::ESCAPE then exit
+    when SDL2::Key::Scan::ESCAPE
+      exit
+    when SDL2::Key::Scan::U
+      @path.remove(@path.last)
     end
   end
 

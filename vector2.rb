@@ -19,6 +19,11 @@ class Vector2
     Vector2.new(alpha * x, alpha * y)
   end
 
+  def update(b)
+    @x = b.x
+    @y = b.y
+  end
+
   def to_s
     "[#{@x},#{y}]"
   end

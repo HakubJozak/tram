@@ -14,7 +14,23 @@ class Path
 
   def remove(point)
     # @controls.delete(point)
-    @points.delete(point)
+    i = @points.index(point)
+
+    if i >= 0
+      a = @points[i-1]
+      b = @points[i+1]
+
+      if a && b
+        @controls[i] = a + (b-a) * 0.5
+      end
+      
+      @controls.delete_at(i-1)
+      @points.delete_at(i)
+    end
+  end
+
+  def last
+    @points.last
   end
 
   def <<(point)
@@ -29,7 +45,7 @@ class Path
       @controls << half
     end
 
-    point
+    self
   end
 
   def draw(pen)
@@ -52,8 +68,14 @@ class Path
   end
 
   def each_point(&block)
+    return enum_for(:each_point) unless block_given?
+
     @points.each   { |p| yield(p) }
     @controls.each { |p| yield(p) }    
+  end
+
+  def size
+    @points.size
   end
 
     #   qerp(@a,x,@b) do |x|
