@@ -40,11 +40,20 @@ class TramGame
         when SDL2::Event::KeyDown
           on_key_down(event.scancode)
         when SDL2::Event::MouseButtonDown
-          if nn = @path.find_nearest(@mouse)
-            @selected = nn
-          else
-            @selected = nil
-            @path << Vector2.new(event.x, event.y)
+          case event.button
+          when 1
+            if nn = @path.find_nearest(@mouse)
+              @selected = nn
+            else
+              @selected = nil
+              @path << Vector2.new(event.x, event.y)
+            end
+            break
+          when 3
+            if nn = @path.find_nearest(@mouse)
+              @path.remove(nn)
+            end
+            break
           end
         when SDL2::Event::MouseButtonUp
           @selected = nil
@@ -55,7 +64,6 @@ class TramGame
         @selected.x = @mouse.x
         @selected.y = @mouse.y
       end
-
 
       @renderer.draw_color = [0,0,0]
       @renderer.clear

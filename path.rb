@@ -12,34 +12,25 @@ class Path
     @controls = []
   end
 
+  def remove(point)
+    # @controls.delete(point)
+    @points.delete(point)
+  end
+
   def <<(point)
-    if @points.size <= @controls.size
-      @points << point
-    else
-      @controls << point
+    @points << point
+
+    if @points.size > 1
+      a = @points[-2]
+      b = @points[-1]
+
+      half = a + (b - a) * 0.5
+
+      @controls << half
     end
 
     point
   end
-
-
-  # def <<(point)
-  #   @points << point
-
-  #   if @points.size > 1
-  #     a = @points[-2]
-  #     b = @points[-1]
-
-  #     half = a + (b - a) * 0.5
-
-  #     puts "Half: #{half}, Point: #{point}"
-  #     half.x += 30
-
-  #     @controls << half
-  #   end
-
-  #   point
-  # end
 
   def draw(pen)
     @controls.each.with_index do |x,i|
