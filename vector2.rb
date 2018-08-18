@@ -23,7 +23,6 @@ class Vector2
     "[#{@x},#{y}]"
   end
 
-
   # def +=(b)
   #   self[0] += b[0]
   #   self[1] += b[1]

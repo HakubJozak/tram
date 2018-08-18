@@ -42,8 +42,6 @@ class Path
   # end
 
   def draw(pen)
-
-
     @controls.each.with_index do |x,i|
       a = @points[i]
       b = @points[i+1]
@@ -54,12 +52,17 @@ class Path
         end
       end
       
-      pen.draw_square(x, WHITE)
+      pen.draw_rect(x, WHITE)
     end    
     
     @points.each do |p|
-      pen.draw_square(p, RED)
+      pen.draw_rect(p, RED)
     end    
+  end
+
+  def each_point(&block)
+    @points.each   { |p| yield(p) }
+    @controls.each { |p| yield(p) }    
   end
 
     #   qerp(@a,x,@b) do |x|
@@ -70,6 +73,22 @@ class Path
     #   renderer
     # end
 
+  def find_nearest(origin)
+    threshold = 48
+    nearest   = nil
+    
+    each_point do |p|
+      r = (p.x - origin.x) ** 2 + (p.y - origin.y) ** 2
+
+      if r < threshold
+        threshold = r
+        nearest = p
+      end
+    end
+
+    nearest
+  end
+  
   private
 
   def lerp(a,b,t)
@@ -84,7 +103,7 @@ class Path
       q2 = b * (2*(1-t) * t)
       q3 = c * (t**2)
       yield q1 + q2 + q3
-      t += 0.001
+      t += 0.01
     end
   end
 
