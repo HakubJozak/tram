@@ -2,6 +2,7 @@ require "sdl2"
 require "pry"
 
 require_relative "mouse"
+require_relative "pen"
 require_relative "path"
 require_relative "vector2"
 
@@ -14,9 +15,6 @@ require_relative "vector2"
 class TramGame
 
   def initialize
-    @path = Path.new
-    @mouse = Mouse.new
-
     SDL2.init SDL2::INIT_VIDEO  |
               SDL2::INIT_AUDIO  |
               SDL2::INIT_EVENTS |
@@ -30,7 +28,9 @@ class TramGame
                                  SDL2::Window::POS_CENTERED,
                                  1024, 768, 0)
 
-    @renderer = window.create_renderer(-1, 0)
+    @path = Path.new
+    @mouse = Mouse.new
+    @pen = Pen.new(window)
   end
 
   def run
@@ -62,19 +62,17 @@ class TramGame
 
       @selected.update(@mouse) if @selected
 
+      @pen.clear!
 
-      @renderer.draw_color = [0,0,0]
-      @renderer.clear
-
-      @path.draw(self)
-      @mouse.draw(self)
+      @path.draw(@pen)
+      @mouse.draw(@pen)
 
       # highlight the nearest
       if nearest = @path.find_nearest(@mouse)
-        draw_square(nearest, color = [255,0,0])
+        @pen.draw_square(nearest, color = [255,0,0])
       end
 
-      @renderer.present
+      @pen.show!
     end
   end
 
@@ -83,7 +81,6 @@ class TramGame
     when SDL2::Key::Scan::ESCAPE
       exit
     when SDL2::Key::Scan::U
-      @path.remove(@path.last)
     end
   end
 
@@ -92,28 +89,6 @@ class TramGame
     end
   end
 
-  def draw_dot(a, color = [255, 255, 0])
-    @renderer.draw_color = color
-    @renderer.draw_point(a.x, a.y)
-  end
-
-  def draw_cross(a, color = [0,255,0], size = 8)
-    @renderer.draw_color = color
-    @renderer.draw_line(a.x - size , a.y - size, a.x + size, a.y + size)
-    @renderer.draw_line(a.x - size , a.y + size, a.x + size, a.y - size)    
-  end
-
-  def draw_square(a, color = [255,0,0], size = 8)
-    @renderer.draw_color = color
-    rect = SDL2::Rect.new(a.x - size, a.y - size, size, size)
-    @renderer.fill_rect(rect)
-  end
-
-  def draw_rect(a, color = [255,0,0], size = 8)
-    @renderer.draw_color = color
-    rect = SDL2::Rect.new(a.x - size, a.y - size, size, size)
-    @renderer.draw_rect(rect)
-  end  
 
   # def message
   #   @font = SDL2::TTF.open("caviar_dreams_bold.ttf", 40)

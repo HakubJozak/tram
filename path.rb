@@ -29,10 +29,6 @@ class Path
     end
   end
 
-  def last
-    @points.last
-  end
-
   def <<(point)
     @points << point
 
