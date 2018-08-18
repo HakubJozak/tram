@@ -1,13 +1,15 @@
 require "sdl2"
 require "pry"
 
+require_relative "vector2"
 require_relative "mouse"
 require_relative "pen"
 require_relative "path"
 require_relative "builder"
 require_relative "plan"
 require_relative "segment"
-require_relative "vector2"
+require_relative "vertex"
+
 
 
 
@@ -42,16 +44,24 @@ class TramGame
         when SDL2::Event::MouseButtonDown
           case event.button
           when 1
-            if nn = @plan.find_nearest(@mouse)
+            if nn = @plan.nearest_vertex(@mouse)
               @selected = nn
             else
-              @selected = nil
-              @path << Vector2.new(event.x, event.y)
+              created = Vertex.new(event)
+              @plan.add created
+              
+              if @last
+                @plan.add Segment.new(@last, created)
+              end
+              
+              @last = created
             end
             break
           when 3
             if nn = @path.find_nearest(@mouse)
               @path.remove(nn)
+            else
+              @selected = nil
             end
             break
           end
@@ -60,17 +70,17 @@ class TramGame
         end
       end
 
+      # moving the selected point by mouse
       @selected.update(@mouse) if @selected
 
       @pen.clear!
-
-      @path.draw(@pen)
+      @plan.draw(@pen)
       @mouse.draw(@pen)
 
       # highlight the nearest
-      if nearest = @path.find_nearest(@mouse)
-        @pen.draw_square(nearest, color = [255,0,0])
-      end
+      # if nearest = @path.find_nearest(@mouse)
+      #   @pen.draw_square(nearest, color = [255,0,0])
+      # end
 
       @pen.show!
     end

@@ -5,7 +5,7 @@ class Vector2
   def initialize(*args)
     if args.size == 1
       @x = args[0].x      
-      @y = args[1].y
+      @y = args[0].y
     else
       @x = args[0]
       @y = args[1]
@@ -41,6 +41,3 @@ class Vector2
 
 end
 
-
-class Vertex < Vector2
-end

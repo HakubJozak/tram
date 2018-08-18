@@ -6,9 +6,17 @@ class Plan
 
   def draw(pen)
     @segments.each { |s| s.draw(pen) }
-    @points.each {
-      pen.draw_rect(@control, Pen::RED)
+    @points.each { |p|
+      pen.draw_rect(p, Pen::RED)
     }
+  end
+
+  def add(thing)
+    if thing.is_a? Segment
+      @segments << thing
+    else
+      @points << thing
+    end
   end
 
   def nearest_vertex(origin)
@@ -30,7 +38,7 @@ class Plan
   def each_point(&block)
     # return enum_for(:each_point) unless block_given?
     @points.each   { |p| yield(p) }
-    @segmens.each {  |s| yield(s.control) }    
+    @segments.each {  |s| yield(s.control) }    
   end
   
 
