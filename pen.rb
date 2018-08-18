@@ -1,5 +1,11 @@
 class Pen
 
+  RED   = [ 255,0,0]
+  GREEN = [ 0,255,0]
+  BLUE  = [ 0,0,255]    
+  WHITE = [ 255,255,255]
+  YELLOW = [ 255,255, 0]  
+
   def initialize(window)
     @renderer = window.create_renderer(-1, 0)
   end

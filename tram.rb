@@ -4,10 +4,10 @@ require "pry"
 require_relative "mouse"
 require_relative "pen"
 require_relative "path"
+require_relative "builder"
+require_relative "plan"
+require_relative "segment"
 require_relative "vector2"
-
-
-
 
 
 
@@ -28,9 +28,9 @@ class TramGame
                                  SDL2::Window::POS_CENTERED,
                                  1024, 768, 0)
 
-    @path = Path.new
     @mouse = Mouse.new
-    @pen = Pen.new(window)
+    @plan  = Plan.new
+    @pen   = Pen.new(window)
   end
 
   def run
@@ -42,7 +42,7 @@ class TramGame
         when SDL2::Event::MouseButtonDown
           case event.button
           when 1
-            if nn = @path.find_nearest(@mouse)
+            if nn = @plan.find_nearest(@mouse)
               @selected = nn
             else
               @selected = nil

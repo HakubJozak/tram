@@ -2,9 +2,14 @@ class Vector2
 
   attr_accessor :x, :y
 
-  def initialize(a,b)
-    @x = a
-    @y = b
+  def initialize(*args)
+    if args.size == 1
+      @x = args[0].x      
+      @y = args[1].y
+    else
+      @x = args[0]
+      @y = args[1]
+    end
   end
 
   def +(b)
@@ -34,4 +39,8 @@ class Vector2
   #   self
   # end
 
+end
+
+
+class Vertex < Vector2
 end
