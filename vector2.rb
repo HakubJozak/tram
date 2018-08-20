@@ -4,7 +4,7 @@ class Vector2
 
   def initialize(*args)
     if args.size == 1
-      @x = args[0].x      
+      @x = args[0].x
       @y = args[0].y
     else
       @x = args[0]
@@ -40,4 +40,3 @@ class Vector2
   # end
 
 end
-

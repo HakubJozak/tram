@@ -11,6 +11,12 @@ class Vertex < Vector2
     @segments << s
   end
 
-
+  def draw(pen, hover: false)
+    if hover
+      pen.draw_square(self, Pen::RED)      
+    else
+      pen.draw_rect(self, Pen::RED)
+    end
+  end
 
 end

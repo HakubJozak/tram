@@ -4,7 +4,7 @@ class Segment
 
   attr_reader :a, :b, :control
 
-  def_delegators :@control, :x, :y  
+  def_delegators :@control, :x, :y
 
   def initialize(a,b)
     @a = a
@@ -12,7 +12,7 @@ class Segment
 
     @a.add_segment(self)
     @b.add_segment(self)
-    
+
     @control = ControlPoint.new(@a, @b, self)
   end
 
@@ -21,7 +21,7 @@ class Segment
       pen.draw_dot(p, Pen::YELLOW)
     end
 
-    pen.draw_rect(@control, Pen::WHITE)    
+    pen.draw_rect(@control, Pen::WHITE)
   end
 
   private
@@ -45,8 +45,16 @@ class Segment
         super (a + b) * 0.5
         @segment = segment
       end
+
+      def draw(pen, hover: false)
+        if hover
+          pen.draw_square(self, Pen::WHITE)      
+        else
+          pen.draw_rect(self, Pen::WHITE)
+        end
+      end
     end
 
-    
+
 
 end

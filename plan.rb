@@ -5,10 +5,9 @@ class Plan
   end
 
   def draw(pen)
-    @segments.each { |s| s.draw(pen) }
-    @points.each { |p|
-      pen.draw_rect(p, Pen::RED)
-    }
+    drawing = -> (p) { p.draw(pen) }
+    @segments.each(&drawing)
+    @points.each(&drawing)
   end
 
   def add(thing)
@@ -19,11 +18,11 @@ class Plan
     end
   end
 
-  def nearest_vertex(origin)
+  def nearest(origin, type: :all)
     threshold = 48
     nearest   = nil
-    
-    each_point do |p|
+
+    each(type) do |p|
       r = (p.x - origin.x) ** 2 + (p.y - origin.y) ** 2
 
       if r < threshold
@@ -35,12 +34,16 @@ class Plan
     nearest
   end
 
-  def each_point(&block)
+  def each(type, &block)
     # return enum_for(:each_point) unless block_given?
+    
     @points.each   { |p| yield(p) }
-    @segments.each {  |s| yield(s.control) }    
+
+    unless type == :vertex
+      @segments.each {  |s| yield(s.control) }
+    end
   end
-  
+
 
 
 end
