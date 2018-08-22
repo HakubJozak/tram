@@ -19,15 +19,15 @@ module Tool
 
     def mouse_up(e)
       if e.button == 1
-        if @focus
-          if nn = @plan.nearest(@mouse, type: :vertex)
-            connect_points(nn, @focus)
-            @focus = nn
-          else
-            new_point = add_point(e)
-            connect_points(new_point, @focus)
-            @focus = new_point
-          end
+        old_point = @plan.nearest(@mouse, type: :vertex)
+
+        if @focus && old_point
+          connect_points(old_point, @focus)
+          @focus = old_point
+        elsif @focus && old_point.nil?
+          new_point = add_point(e)
+          connect_points(new_point, @focus)
+          @focus = new_point
         else
           @focus = add_point(e)
         end
