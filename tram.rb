@@ -12,6 +12,7 @@ require_relative "tool/base"
 require_relative "tool/creator"
 require_relative "tool/mover"
 require_relative "builder"
+require_relative "player"
 
 require_relative "plan"
 require_relative "segment"
@@ -46,7 +47,7 @@ class TramGame
                  Plan.new
                end
 
-    @builder = Builder.new(plan: @plan, mouse: @mouse)
+    @state   = Builder.new(plan: @plan, mouse: @mouse)
     @pen     = Pen.new(window)
   end
 
@@ -58,17 +59,17 @@ class TramGame
           on_key_down(event)
 
         when SDL2::Event::MouseButtonDown
-          @builder.mouse_down(event)
+          @state.mouse_down(event)
 
         when SDL2::Event::MouseButtonUp
-          @builder.mouse_up(event)
+          @state.mouse_up(event)
         end
       end
 
-      @builder.update
+      @state.update
 
       @pen.clear!
-      @builder.draw(@pen)
+      @state.draw(@pen)
       @pen.show!
     end
   end
@@ -78,12 +79,6 @@ class TramGame
     case event.scancode
     when SDL2::Key::Scan::ESCAPE
       exit
-    when SDL2::Key::Scan::F1
-      @builder.tool = Tool::Creator.new(plan: @plan, mouse: @mouse)
-
-    when SDL2::Key::Scan::F2
-      @builder.tool = Tool::Mover.new(plan: @plan, mouse: @mouse)
-
     when SDL2::Key::Scan::S
       if event.mod & 64
         require 'yaml'
@@ -94,9 +89,17 @@ class TramGame
 
         puts 'Saved.'
       end
+    when SDL2::Key::Scan::B
+      @state = Builder.new(plan: @plan, mouse: @mouse)
+
+    when SDL2::Key::Scan::P
+      unless @plan.empty?
+        @state = Player.new(plan: @plan, mouse: @mouse)
+      end
     else
-      puts "Scan: #{event.scancode}, #{event.mod}"
+      @state.key_down(event)
     end
+
   end
 
 

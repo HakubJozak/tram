@@ -6,8 +6,17 @@ class Builder
     @tool = Tool::Creator.new(plan: plan, mouse: mouse)
   end
 
-  def tool=(t)
-    @tool = t
+  def key_down(event)
+    case event.scancode
+    when SDL2::Key::Scan::F1
+      @tool = Tool::Creator.new(plan: @plan, mouse: @mouse)
+
+    when SDL2::Key::Scan::F2
+      @tool = Tool::Mover.new(plan: @plan, mouse: @mouse)
+    else
+      # DEBUG
+      puts "Scan: #{event.scancode}, #{event.mod}"
+    end
   end
 
   def mouse_down(event)

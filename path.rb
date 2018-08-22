@@ -19,7 +19,7 @@ class Path
       if a && b
         @controls[i] = a + (b-a) * 0.5
       end
-      
+
       @controls.delete_at(i-1)
       @points.delete_at(i)
     end

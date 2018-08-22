@@ -23,6 +23,10 @@ class Segment
       type: 'bezier' }
   end
 
+  def [] (t)
+
+  end
+
   def draw(pen, hover: false, active: false)
     color = if active || hover
               Pen::GREEN
@@ -30,23 +34,27 @@ class Segment
               Pen::WHITE
             end
 
-    bezier(@a,@control,@b) do |p|
+    bezier do |p|
       pen.draw_dot(p, color)
     end
 
     pen.draw_rect(@control, color)
   end
 
+  def bezier_at(t)
+    q1 = @a * ((1-t)**2)
+    q2 = @control * (2*(1-t) * t)
+    q3 = @b * (t**2)
+    q1 + q2 + q3
+  end
+
   private
 
-    def bezier(a,b,c, &block)
+    def bezier(&block)
       t = 0.0
 
       while t < 1.0
-        q1 = a * ((1-t)**2)
-        q2 = b * (2*(1-t) * t)
-        q3 = c * (t**2)
-        yield q1 + q2 + q3
+        yield bezier_at(t)
         t += 0.01
       end
     end

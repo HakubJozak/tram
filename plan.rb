@@ -15,6 +15,15 @@ class Plan
     @points.each(&draw)
   end
 
+  def empty?
+    @segments.empty?
+  end
+
+  # TODO - select explicit
+  def start
+    @segments.first.a
+  end
+
   def to_h
     { segments: @segments.map(&:to_h) }
   end
@@ -46,6 +55,10 @@ class Plan
     end
 
     nearest
+  end
+
+  def each_segment(&block)
+    @segments.each(&block)
   end
 
   def each(type, &block)
