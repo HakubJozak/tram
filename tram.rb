@@ -68,13 +68,6 @@ class TramGame
       @builder.update
 
       @pen.clear!
-      @plan.draw(@pen)
-
-      # hover
-      if hover = @plan.nearest(@mouse)
-        hover.draw(@pen, hover: true)
-      end
-
       @builder.draw(@pen)
       @pen.show!
     end

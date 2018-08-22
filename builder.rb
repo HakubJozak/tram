@@ -1,6 +1,8 @@
 class Builder
 
   def initialize(plan:, mouse:)
+    @plan = plan
+    @mouse = mouse
     @tool = Tool::Creator.new(plan: plan, mouse: mouse)
   end
 
@@ -21,7 +23,12 @@ class Builder
   end
 
   def draw(pen)
+    @plan.draw(pen)
     @tool.draw(pen)
+
+    if nn = @plan.nearest(@mouse)
+      nn.draw(pen, hover: true)
+    end
   end
 
 end

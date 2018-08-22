@@ -7,21 +7,27 @@ module Tool
 
     def draw(pen)
       if @focus
+        pen.line(@mouse, @focus, Pen::WHITE)
         pen.draw_square(@focus, Pen::GREEN)
       end
 
-      pen.draw_cross(@mouse.state, Pen::YELLOW)      
+      pen.draw_cross(@mouse, Pen::YELLOW)
     end
 
     def mouse_down(e)
-      self
     end
 
     def mouse_up(e)
       if e.button == 1
-        if nn = @plan.nearest(@mouse, type: :vertex)
-          connect_points(nn, @focus) if @focus
-          @focus = nn
+        if @focus
+          if nn = @plan.nearest(@mouse, type: :vertex)
+            connect_points(nn, @focus)
+            @focus = nn
+          else
+            new_point = add_point(e)
+            connect_points(new_point, @focus)
+            @focus = new_point
+          end
         else
           @focus = add_point(e)
         end
@@ -42,7 +48,7 @@ module Tool
       new_point = @plan.add Vertex.new(coords)
 
       if @focus
-        @plan.add Segment.new(a: @focus, b: new_point)
+
       end
 
       new_point

@@ -23,12 +23,18 @@ class Segment
       type: 'bezier' }
   end
 
-  def draw(pen)
+  def draw(pen, hover: false, active: false)
+    color = if active || hover
+              Pen::GREEN
+            else
+              Pen::WHITE
+            end
+
     bezier(@a,@control,@b) do |p|
-      pen.draw_dot(p, Pen::YELLOW)
+      pen.draw_dot(p, color)
     end
 
-    pen.draw_rect(@control, Pen::WHITE)
+    pen.draw_rect(@control, color)
   end
 
   private
@@ -49,10 +55,10 @@ class Segment
       attr_reader :segment
 
       def initialize(a: nil, b: nil, segment: , coords: nil)
-        if a && b
-          super (a + b) * 0.5
-        elsif coords
+        if coords
           super coords
+        elsif a && b
+          super (a + b) * 0.5
         else
           fail "You have to specify either a,b or coords for ControlPoint"
         end
@@ -60,9 +66,13 @@ class Segment
         @segment = segment
       end
 
-      def draw(pen, hover: false)
+      def draw(pen, hover: false, active: false)
+        @segment.draw(pen, active: active, hover: hover)
+
         if hover
-          pen.draw_square(self, Pen::WHITE)
+          pen.draw_square(self, Pen::GREEN)
+        elsif active
+          pen.draw_square(self, Pen::GREEN)          
         else
           pen.draw_rect(self, Pen::WHITE)
         end

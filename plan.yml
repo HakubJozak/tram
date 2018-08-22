@@ -4,9 +4,159 @@
     :x: 95
     :y: 297
   :control:
-    :x: 180.0
-    :y: 374.5
+    :x: 57
+    :y: 530
   :b:
     :x: 265
     :y: 452
+  :type: bezier
+- :a:
+    :x: 613
+    :y: 468
+  :control:
+    :x: 943
+    :y: 425
+  :b:
+    :x: 504
+    :y: 193
+  :type: bezier
+- :a:
+    :x: 504
+    :y: 193
+  :control:
+    :x: 667.5
+    :y: 244.5
+  :b:
+    :x: 831
+    :y: 296
+  :type: bezier
+- :a:
+    :x: 831
+    :y: 296
+  :control:
+    :x: 837.0
+    :y: 374.0
+  :b:
+    :x: 843
+    :y: 452
+  :type: bezier
+- :a:
+    :x: 843
+    :y: 452
+  :control:
+    :x: 843
+    :y: 526
+  :b:
+    :x: 768
+    :y: 514
+  :type: bezier
+- :a:
+    :x: 613
+    :y: 468
+  :control:
+    :x: 692
+    :y: 489
+  :b:
+    :x: 768
+    :y: 514
+  :type: bezier
+- :a:
+    :x: 613
+    :y: 468
+  :control:
+    :x: 522
+    :y: 466
+  :b:
+    :x: 442
+    :y: 413
+  :type: bezier
+- :a:
+    :x: 265
+    :y: 452
+  :control:
+    :x: 335
+    :y: 350
+  :b:
+    :x: 442
+    :y: 413
+  :type: bezier
+- :a:
+    :x: 504
+    :y: 193
+  :control:
+    :x: 242
+    :y: 43
+  :b:
+    :x: 95
+    :y: 297
+  :type: bezier
+- :a:
+    :x: 831
+    :y: 296
+  :control:
+    :x: 747
+    :y: 24
+  :b:
+    :x: 729
+    :y: 103
+  :type: bezier
+- :a:
+    :x: 729
+    :y: 103
+  :control:
+    :x: 666
+    :y: 232
+  :b:
+    :x: 504
+    :y: 193
+  :type: bezier
+- :a:
+    :x: 423
+    :y: 527
+  :control:
+    :x: 354
+    :y: 526
+  :b:
+    :x: 297
+    :y: 567
+  :type: bezier
+- :a:
+    :x: 577
+    :y: 605
+  :control:
+    :x: 536
+    :y: 514
+  :b:
+    :x: 423
+    :y: 527
+  :type: bezier
+- :a:
+    :x: 456
+    :y: 708
+  :control:
+    :x: 594
+    :y: 705
+  :b:
+    :x: 577
+    :y: 605
+  :type: bezier
+- :a:
+    :x: 322
+    :y: 694
+  :control:
+    :x: 379
+    :y: 735
+  :b:
+    :x: 456
+    :y: 708
+  :type: bezier
+- :a:
+    :x: 297
+    :y: 567
+  :control:
+    :x: 234
+    :y: 647
+  :b:
+    :x: 322
+    :y: 694
   :type: bezier

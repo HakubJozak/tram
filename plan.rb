@@ -2,6 +2,7 @@ require "ostruct"
 
 
 class Plan
+
   def initialize(plan = nil)
     @points   = []
     @segments = []
@@ -9,9 +10,9 @@ class Plan
   end
 
   def draw(pen)
-    drawing = -> (p) { p.draw(pen) }
-    @segments.each(&drawing)
-    @points.each(&drawing)
+    draw = -> (p) { p.draw(pen) }
+    @segments.each(&draw)
+    @points.each(&draw)
   end
 
   def to_h
@@ -19,7 +20,10 @@ class Plan
   end
 
   def add(thing)
+    puts 'a'
+
     if thing.is_a? Segment
+      puts 's'
       @segments << thing
     else
       unless p = @points.find { |p| thing.x == p.x && thing.y == p.y }

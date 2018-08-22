@@ -9,7 +9,7 @@ module Tool
 
     def draw(pen)
       if @selected
-        pen.draw_square(@selected, Pen::GREEN)
+        @selected.draw(pen, active: true)
       end
 
       pen.draw_cross(@mouse.state, Pen::WHITE)

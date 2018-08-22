@@ -13,7 +13,7 @@ class Vertex < Vector2
     s
   end
 
-  def draw(pen, hover: false)
+  def draw(pen, hover: false, active: false)
     if hover
       pen.draw_square(self, Pen::RED)
     else

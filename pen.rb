@@ -19,6 +19,11 @@ class Pen
     @renderer.present
   end
 
+  def line(a,b, color)
+    @renderer.draw_color = color
+    @renderer.draw_line(a.x, a.y, b.x, b.y)
+  end
+
   def draw_dot(a, color = [255, 255, 0])
     @renderer.draw_color = color
     @renderer.draw_point(a.x, a.y)
