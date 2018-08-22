@@ -14,13 +14,5 @@ class Mouse
     SDL2::Mouse.state
   end
 
-  def draw(pen)
-    pen.draw_cross(state, [255,255,255])
-    # if @selected
-    #   pen.draw_square(state, [255,255,255])
-    # else
-    # end
-  end
-
 
 end

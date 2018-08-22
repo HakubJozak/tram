@@ -4,12 +4,21 @@ class Vector2
 
   def initialize(*args)
     if args.size == 1
-      @x = args[0].x
-      @y = args[0].y
+      if args[0].respond_to? :fetch
+        @x = args[0].fetch :x
+        @y = args[0].fetch :y
+      else
+        @x = args[0].x
+        @y = args[0].y
+      end
     else
       @x = args[0]
       @y = args[1]
     end
+  end
+
+  def to_h
+    { x: @x, y: @y }
   end
 
   def +(b)

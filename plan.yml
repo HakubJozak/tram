@@ -1,0 +1,12 @@
+---
+:segments:
+- :a:
+    :x: 95
+    :y: 297
+  :control:
+    :x: 180.0
+    :y: 374.5
+  :b:
+    :x: 265
+    :y: 452
+  :type: bezier

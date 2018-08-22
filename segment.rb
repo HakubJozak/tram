@@ -6,14 +6,21 @@ class Segment
 
   def_delegators :@control, :x, :y
 
-  def initialize(a,b)
+  def initialize(a:, b:, control: nil)
     @a = a
     @b = b
 
     @a.add_segment(self)
     @b.add_segment(self)
 
-    @control = ControlPoint.new(@a, @b, self)
+    @control = ControlPoint.new(segment: self, a: a, b: b, coords: control)
+  end
+
+  def to_h
+    { a: @a.to_h,
+      control: @control.to_h,
+      b: @b.to_h,
+      type: 'bezier' }
   end
 
   def draw(pen)
@@ -41,14 +48,21 @@ class Segment
     class ControlPoint < Vector2
       attr_reader :segment
 
-      def initialize(a, b, segment)
-        super (a + b) * 0.5
+      def initialize(a: nil, b: nil, segment: , coords: nil)
+        if a && b
+          super (a + b) * 0.5
+        elsif coords
+          super coords
+        else
+          fail "You have to specify either a,b or coords for ControlPoint"
+        end
+
         @segment = segment
       end
 
       def draw(pen, hover: false)
         if hover
-          pen.draw_square(self, Pen::WHITE)      
+          pen.draw_square(self, Pen::WHITE)
         else
           pen.draw_rect(self, Pen::WHITE)
         end

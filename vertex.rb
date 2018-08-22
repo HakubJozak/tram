@@ -9,11 +9,13 @@ class Vertex < Vector2
 
   def add_segment(s)
     @segments << s
+    @segments.uniq!
+    s
   end
 
   def draw(pen, hover: false)
     if hover
-      pen.draw_square(self, Pen::RED)      
+      pen.draw_square(self, Pen::RED)
     else
       pen.draw_rect(self, Pen::RED)
     end

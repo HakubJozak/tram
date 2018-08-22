@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require "sdl2"
 require "pry"
+require "yaml"
 
 require_relative "vector2"
 require_relative "mouse"
@@ -8,7 +9,8 @@ require_relative "pen"
 require_relative "path"
 
 require_relative "tool/base"
-require_relative "tool/create"
+require_relative "tool/creator"
+require_relative "tool/mover"
 require_relative "builder"
 
 require_relative "plan"
@@ -36,9 +38,16 @@ class TramGame
                                  1024, 768, 0)
 
     @mouse = Mouse.new
-    @plan  = Plan.new
+
+
+    @plan    = if File.exist?('plan.yml')
+                 Plan.new YAML.load_file('plan.yml')
+               else
+                 Plan.new
+               end
+
     @builder = Builder.new(plan: @plan, mouse: @mouse)
-    @pen   = Pen.new(window)
+    @pen     = Pen.new(window)
   end
 
   def run
@@ -46,7 +55,7 @@ class TramGame
       while event = SDL2::Event.poll
         case event
         when SDL2::Event::KeyDown
-          on_key_down(event.scancode)
+          on_key_down(event)
 
         when SDL2::Event::MouseButtonDown
           @builder.mouse_down(event)
@@ -56,34 +65,44 @@ class TramGame
         end
       end
 
-      # moving the selected point by mouse
-      @selected.update(@mouse) if @selected
+      @builder.update
 
       @pen.clear!
       @plan.draw(@pen)
-      @mouse.draw(@pen)
 
       # hover
       if hover = @plan.nearest(@mouse)
         hover.draw(@pen, hover: true)
-      end                   
+      end
 
       @builder.draw(@pen)
-      
       @pen.show!
     end
   end
 
-  def on_key_down(scancode)
-    case scancode
+
+  def on_key_down(event)
+    case event.scancode
     when SDL2::Key::Scan::ESCAPE
       exit
-    when SDL2::Key::Scan::U
-    end
-  end
+    when SDL2::Key::Scan::F1
+      @builder.tool = Tool::Creator.new(plan: @plan, mouse: @mouse)
 
-  def on_mouse_down(event)
-    if event.button == 1
+    when SDL2::Key::Scan::F2
+      @builder.tool = Tool::Mover.new(plan: @plan, mouse: @mouse)
+
+    when SDL2::Key::Scan::S
+      if event.mod & 64
+        require 'yaml'
+
+        File.open('plan.yml','w') do |f|
+	  f.write @plan.to_h.to_yaml
+        end
+
+        puts 'Saved.'
+      end
+    else
+      puts "Scan: #{event.scancode}, #{event.mod}"
     end
   end
 

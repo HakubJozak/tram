@@ -1,7 +1,11 @@
+require "ostruct"
+
+
 class Plan
-  def initialize
+  def initialize(plan = nil)
     @points   = []
     @segments = []
+    copy_from(plan) if plan
   end
 
   def draw(pen)
@@ -10,11 +14,20 @@ class Plan
     @points.each(&drawing)
   end
 
+  def to_h
+    { segments: @segments.map(&:to_h) }
+  end
+
   def add(thing)
     if thing.is_a? Segment
       @segments << thing
     else
-      @points << thing
+      unless p = @points.find { |p| thing.x == p.x && thing.y == p.y }
+        @points << thing
+        thing
+      else
+        p
+      end
     end
   end
 
@@ -36,7 +49,7 @@ class Plan
 
   def each(type, &block)
     # return enum_for(:each_point) unless block_given?
-    
+
     @points.each   { |p| yield(p) }
 
     unless type == :vertex
@@ -44,6 +57,17 @@ class Plan
     end
   end
 
+  private
 
+    def copy_from(plan)
+      # if plan.respond_to? :points
+      # end
+
+      plan[:segments].each do |s|
+        a = add(Vertex.new s[:a])
+        b = add(Vertex.new s[:b])        
+        add Segment.new(a: a, b: b, control: OpenStruct.new(s[:control]))
+      end
+    end
 
 end
