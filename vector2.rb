@@ -17,6 +17,10 @@ class Vector2
     end
   end
 
+  def dist2(b)
+    (x * b.x) + (y * b.y)
+  end
+
   def to_h
     { x: @x, y: @y }
   end

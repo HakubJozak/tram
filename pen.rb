@@ -8,6 +8,12 @@ class Pen
 
   def initialize(window)
     @renderer = window.create_renderer(-1, 0)
+
+    @font = SDL2::TTF.open("fonts/FUTRFW.TTF", 20)
+    @font.hinting = SDL2::TTF::Hinting::NORMAL
+    # @font.style = SDL2::TTF::Style::BOLD
+    @font.outline = 0
+    @font.kerning = true
   end
 
   def clear!
@@ -17,6 +23,14 @@ class Pen
 
   def show!
     @renderer.present
+  end
+
+  # TODO: Cache textures!
+  def text(message, where, color: [255, 255, 255])
+    solid   = @font.render_solid(message, color)
+    texture = @renderer.create_texture_from(solid)
+    rectangle = SDL2::Rect.new where.x, where.y, texture.w, texture.h
+    @renderer.copy(texture, nil, rectangle)
   end
 
   def line(a,b, color)

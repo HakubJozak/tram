@@ -79,8 +79,11 @@ class Plan
 
       plan[:segments].each do |s|
         a = add(Vertex.new s[:a])
-        b = add(Vertex.new s[:b])        
-        add Segment.new(a: a, b: b, control: OpenStruct.new(s[:control]))
+        b = add(Vertex.new s[:b])
+        add Segment.new(a: a,
+                        b: b,
+                        name: s[:name],
+                        control: OpenStruct.new(s[:control]))
       end
     end
 

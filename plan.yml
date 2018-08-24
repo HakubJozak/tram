@@ -9,6 +9,7 @@
   :b:
     :x: 265
     :y: 452
+  :name: S1
   :type: bezier
 - :a:
     :x: 613
@@ -19,6 +20,7 @@
   :b:
     :x: 504
     :y: 193
+  :name: S2
   :type: bezier
 - :a:
     :x: 504
@@ -29,6 +31,7 @@
   :b:
     :x: 831
     :y: 296
+  :name: S3
   :type: bezier
 - :a:
     :x: 831
@@ -39,6 +42,7 @@
   :b:
     :x: 843
     :y: 452
+  :name: S4
   :type: bezier
 - :a:
     :x: 843
@@ -49,6 +53,7 @@
   :b:
     :x: 768
     :y: 514
+  :name: S5
   :type: bezier
 - :a:
     :x: 613
@@ -59,6 +64,7 @@
   :b:
     :x: 768
     :y: 514
+  :name: S6
   :type: bezier
 - :a:
     :x: 613
@@ -69,6 +75,7 @@
   :b:
     :x: 442
     :y: 413
+  :name: S7
   :type: bezier
 - :a:
     :x: 265
@@ -79,6 +86,7 @@
   :b:
     :x: 442
     :y: 413
+  :name: S8
   :type: bezier
 - :a:
     :x: 504
@@ -89,6 +97,7 @@
   :b:
     :x: 95
     :y: 297
+  :name: S9
   :type: bezier
 - :a:
     :x: 831
@@ -99,6 +108,7 @@
   :b:
     :x: 729
     :y: 103
+  :name: S10
   :type: bezier
 - :a:
     :x: 729
@@ -109,6 +119,7 @@
   :b:
     :x: 504
     :y: 193
+  :name: S11
   :type: bezier
 - :a:
     :x: 423
@@ -119,6 +130,7 @@
   :b:
     :x: 297
     :y: 567
+  :name: S12
   :type: bezier
 - :a:
     :x: 577
@@ -129,6 +141,7 @@
   :b:
     :x: 423
     :y: 527
+  :name: S13
   :type: bezier
 - :a:
     :x: 456
@@ -139,6 +152,7 @@
   :b:
     :x: 577
     :y: 605
+  :name: S14
   :type: bezier
 - :a:
     :x: 322
@@ -149,6 +163,7 @@
   :b:
     :x: 456
     :y: 708
+  :name: S15
   :type: bezier
 - :a:
     :x: 297
@@ -159,6 +174,7 @@
   :b:
     :x: 322
     :y: 694
+  :name: S16
   :type: bezier
 - :a:
     :x: 265
@@ -169,6 +185,7 @@
   :b:
     :x: 297
     :y: 567
+  :name: S17
   :type: bezier
 - :a:
     :x: 442
@@ -179,4 +196,5 @@
   :b:
     :x: 421
     :y: 528
+  :name: S18
   :type: bezier

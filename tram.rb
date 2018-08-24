@@ -7,6 +7,7 @@ require_relative "vector2"
 require_relative "mouse"
 require_relative "pen"
 require_relative "path"
+require_relative "naming"
 
 require_relative "tool/base"
 require_relative "tool/creator"
@@ -17,7 +18,6 @@ require_relative "player"
 require_relative "plan"
 require_relative "segment"
 require_relative "vertex"
-
 
 
 
@@ -70,6 +70,7 @@ class TramGame
 
       @pen.clear!
       @state.draw(@pen)
+
       @pen.show!
     end
   end
