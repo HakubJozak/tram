@@ -17,10 +17,20 @@ module Tool
 
     def mouse_up(e)
       @selected = nil
+
+      if e.button == 3
+        puts 'remove'
+
+        if nn = @plan.nearest(@mouse)
+          @plan.remove(nn)
+        end
+      end
     end
 
     def mouse_down(e)
-      @selected = @plan.nearest(@mouse)
+      if e.button == 1
+        @selected = @plan.nearest(@mouse)
+      end
     end
   end
 

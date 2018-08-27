@@ -38,6 +38,18 @@ class Plan
     end
   end
 
+  def remove(thing)
+    case thing
+    when Segment::ControlPoint
+      @segments.delete thing.segment
+    when Vertex
+      thing.segments.each { |s| @segments.delete(s) }
+      @points.delete thing
+    else
+      # Not part of the plan
+    end
+  end
+
   def nearest(origin, type: :all)
     threshold = 48
     nearest   = nil

@@ -5,9 +5,10 @@ class Game
     @mouse = mouse
 
     @balls = [
-      Ball.new(plan: plan, color: Pen::RED, speed: 0.02),
-      Ball.new(plan: plan, color: Pen::GREEN, speed: 0.03),
-      Ball.new(plan: plan, color: Pen::BLUE, speed: 0.04)
+      Ball.new(start: plan.points.sample, color: Pen::RED, speed: 0.005),
+      Ball.new(start: plan.points.sample, color: Pen::GREEN, speed: 0.03),
+      Ball.new(start: plan.points.sample, color: Pen::BLUE, speed: 0.04),
+      Ball.new(start: plan.points.sample, color: Pen::YELLOW, speed: 0.01)      
     ]
   end
 

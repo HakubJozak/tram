@@ -1,18 +1,17 @@
 class Ball
 
-  def initialize(plan: , color:, speed:)
+  def initialize(start: , color:, speed:)
     @color = color
-
     @speed = speed
+
     @direction = 1
     @t = 0.0    
-
-    @x = plan.points.sample
+    @x = start
     @curve = @x.segments.first
   end
 
   def draw(pen)
-    pen.draw_square(@x, @color, 10)
+    pen.draw_square(@x,@color, 10)
   end
 
   def update
@@ -45,7 +44,7 @@ class Ball
         end
       else
         # reverse
-        @speed = 0
+        @direction *= -1
       end
     end
   

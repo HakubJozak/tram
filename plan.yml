@@ -123,7 +123,7 @@
   :type: bezier
 - :a:
     :x: 423
-    :y: 527
+    :y: 473
   :control:
     :x: 350
     :y: 543
@@ -140,7 +140,7 @@
     :y: 514
   :b:
     :x: 423
-    :y: 527
+    :y: 473
   :name: S13
   :type: bezier
 - :a:
@@ -186,15 +186,4 @@
     :x: 297
     :y: 567
   :name: S17
-  :type: bezier
-- :a:
-    :x: 442
-    :y: 413
-  :control:
-    :x: 529
-    :y: 490
-  :b:
-    :x: 421
-    :y: 528
-  :name: S18
   :type: bezier
