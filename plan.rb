@@ -3,6 +3,8 @@ require "ostruct"
 
 class Plan
 
+  attr_reader :points, :segments
+
   def initialize(plan = nil)
     @points   = []
     @segments = []
@@ -17,11 +19,6 @@ class Plan
 
   def empty?
     @segments.empty?
-  end
-
-  # TODO - select explicit
-  def start
-    @segments.first.a
   end
 
   def to_h

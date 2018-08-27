@@ -13,7 +13,8 @@ require_relative "tool/base"
 require_relative "tool/creator"
 require_relative "tool/mover"
 require_relative "builder"
-require_relative "player"
+require_relative "game"
+require_relative "ball"
 
 require_relative "plan"
 require_relative "segment"
@@ -95,7 +96,7 @@ class TramGame
 
     when SDL2::Key::Scan::P
       unless @plan.empty?
-        @state = Player.new(plan: @plan, mouse: @mouse)
+        @state = Game.new(plan: @plan, mouse: @mouse)
       end
     else
       @state.key_down(event)
