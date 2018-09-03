@@ -8,7 +8,7 @@ class Segment
 
   @@naming = Naming.new
   @@count = 0
-  
+
   def initialize(a:, b:, control: nil, name: nil)
     @a = a
     @b = b
@@ -48,6 +48,7 @@ class Segment
     end
 
     pen.draw_rect(@control, color)
+    pen.line(@a, @b, Pen::BLUE) if active || hover
   end
 
   def bezier_at(t)

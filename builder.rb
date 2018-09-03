@@ -19,6 +19,9 @@ class Builder
     end
   end
 
+  def key_up(event)
+  end
+  
   def mouse_down(event)
     @tool.mouse_down(event)
   end

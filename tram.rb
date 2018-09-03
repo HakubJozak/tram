@@ -59,6 +59,9 @@ class TramGame
         when SDL2::Event::KeyDown
           on_key_down(event)
 
+        when SDL2::Event::KeyUp          
+          @state.key_up(event)
+
         when SDL2::Event::MouseButtonDown
           @state.mouse_down(event)
 

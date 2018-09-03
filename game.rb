@@ -3,12 +3,13 @@ class Game
   def initialize(plan:, mouse:)
     @plan = plan
     @mouse = mouse
+    @paused = false
 
     @balls = [
       Ball.new(start: plan.points.sample, color: Pen::RED, speed: 0.005),
       Ball.new(start: plan.points.sample, color: Pen::GREEN, speed: 0.03),
       Ball.new(start: plan.points.sample, color: Pen::BLUE, speed: 0.04),
-      Ball.new(start: plan.points.sample, color: Pen::YELLOW, speed: 0.01)      
+      Ball.new(start: plan.points.sample, color: Pen::YELLOW, speed: 0.01)
     ]
   end
 
@@ -21,7 +22,15 @@ class Game
   def key_down(event)
   end
 
+  def key_up(event)
+    case event.scancode
+    when SDL2::Key::Scan::SPACE
+      @paused = !@paused
+    end
+  end
+
   def update
+    return if @paused
     @balls.each(&:update)
   end
 
