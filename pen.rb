@@ -1,5 +1,6 @@
 class Pen
 
+  BLACK   = [ 0,0,0]
   RED   = [ 255,0,0]
   GREEN = [ 0,255,0]
   BLUE  = [ 0,0,255]
@@ -17,7 +18,7 @@ class Pen
   end
 
   def clear!
-    @renderer.draw_color = [0,0,0]
+    @renderer.draw_color = BLACK
     @renderer.clear
   end
 
@@ -26,7 +27,7 @@ class Pen
   end
 
   # TODO: Cache textures!
-  def text(message, where, color: [255, 255, 255])
+  def text(message, where, color: WHITE)
     solid   = @font.render_solid(message, color)
     texture = @renderer.create_texture_from(solid)
     rectangle = SDL2::Rect.new where.x, where.y, texture.w, texture.h

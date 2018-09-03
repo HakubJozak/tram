@@ -6,6 +6,8 @@ module Tool
     # end
 
     def draw(pen)
+      pen.text "Creator", Vector2.new(5,5)
+
       if @focus
         pen.line(@mouse, @focus, Pen::WHITE)
         pen.draw_square(@focus, Pen::GREEN)

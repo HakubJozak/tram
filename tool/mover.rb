@@ -1,6 +1,7 @@
 module Tool
   class Mover < Base
     def update
+
       # moving the selected point by mouse
       if @selected
         @selected.update(@mouse)
@@ -8,6 +9,8 @@ module Tool
     end
 
     def draw(pen)
+      pen.text "Mover", Vector2.new(5,5)
+
       if @selected
         @selected.draw(pen, active: true)
       end
